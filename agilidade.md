@@ -32,7 +32,45 @@ software de trabalho mede o progresso do projeto
 - O foco principal é a excelência técnica.
 - As equipes devem se reproduzir para serem eficazes regularmente
 
-### Kanban
+#### Scrum
+
+- Product Owner: eficácia
+
+<br/>O PO, além de precisar ter um foco alto e senso de dono, precisará conversar frequentemente com as outras áreas que fazem parte da empresa, para entender quais são os pontos-chave que remetem a dor dos clientes, e conhecer a fundo o produto e mercado em que a empresa está inserida. No seu dia a dia, o PO terá que descrever o que precisa ser feito, e para isso, é necessário conversar com outras áreas para entender as necessidades e também o que pode ou não ser feito. Além de priorizar o que precisa ser construído, muitas vezes o PO terá que dizer não para funcionalidades que agregam menos valor para o negócio/projeto naquele momento.
+
+- Dev Team: qualidade
+
+Especialista: alguém com profundidade de conhecimento em algum assunto;
+
+Generalista: pessoa que sabe um pouco de cada coisa, mas não tem nenhum conteúdo muito aprofundado;
+
+T-shaped: alguém com especialidade em algo, mas com um conhecimento generalizado em outras coisas;
+
+- Scrum Master: eficiência
+
+<img src="https://agileschool.com.br/wp-content/uploads/2019/06/8stancesofascrummaster-768x543.png">
+
+<img src="https://static.wixstatic.com/media/b7403b_942c4bb9c24e4a2e88b1b50e0c2a3cea~mv2.png/v1/fill/w_681,h_515,al_c/b7403b_942c4bb9c24e4a2e88b1b50e0c2a3cea~mv2.png">
+<img src="https://scrumorg-website-prod.s3.amazonaws.com/drupal/inline-images/LinkedIn%20Ad%20for%20PSM%20Nashville_with_water%20mark_1.jpg">
+
+###### Importante
+
+Negócio: responsabilidade em garantir que o produto a ser desenvolvido faça sentido para o mercado. Não adianta você produzir o melhor produto, se não tem cliente para o mesmo.
+
+Tecnológica: responsabilidade em garantir que o produto produzido esteja correto para aquele mercado em específico e público-alvo.
+
+Eficiência: responsabilidade em garantir que o time opere com uma melhor qualidade possível.
+
+
+###### Definição de Sprint pronto
+
+A Definição de Pronto varia de projeto para projeto, de time para time, de momento em momento do projeto. Exemplos de Definições de Pronto são:
+
+Desenvolvido + Testado Manualmente
+Análise + Desenvolvimento + Em homologação
+Teste de aceitação + desenvolvimento + code review + aprovação
+
+#### Kanban
 
 Método organizacional e de gestão visual que controla tarefas de uma equipe e tem adaptabilidade
 
@@ -58,6 +96,10 @@ As cores estão relacionadas a prioridade
 - Trânsito em fluxo definido
 - Cada estágio do fluxo puxa o item do estágio anterior
 - Em cada estágio, a quantidade de itens trabalhados ao mesmo tempo é limitada (WIP - Work in progress)
+
+Service Delivery Manager: é a pessoa que garante que os itens não fiquem parados, tem papel de facilitador no fluxo de mudanças e melhorias.
+
+Service Request Manager: tem como papel principal fazer a ordenação e papel dos itens, qual item terá maior impacto e retorno de investimento.
 
 <table>
   <tr>
