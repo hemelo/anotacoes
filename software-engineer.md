@@ -128,6 +128,105 @@ Camada dedicada de infraestrutura para observação, testes, gerenciamento de tr
 - **Translation service:** conector com API externa, feito para facilitar manutenção
 - **Edge service:** define comportamento, ex.: envia dados diferentes de uma API para Mobile ou Web
 
+### CQRS - Command Query Responsibility Seggregation
+
+Para microsserviços com muito tráfego
+
+- Leitura e escrita separados
+- O modelo de leitura pode ter informações agregadas de outros domínios
+- O modelo de escrita pode ter dados sendo automaticamente gerados
+- Aumenta MUITO a complexibilidade do sistema
+
+### Falhas em comunicação síncrona
+
+- Uso de Circuit Breaker & Cache no Gateway
+
+### Asynchronous Events
+
+- Determinados problemas não podem ser resolvidos imediatamente
+- Um serviço emite um evento que será tratado em seu devido tempo
+- Serviços de mensageria/stream de dados brilham
+
+### Falhas em comunicação assíncrona
+
+- Retry
+- Retry com back-off
+- Fila de mensagens mortas
+- Mensagens devem poder ser lidas fora de ordem
+- Mensagens devem poder ser repetidas rapidamente (idempotência)
+
+### Componentes
+
+São servidores ou aplicacoes de infra
+
+<img src="images/microsservicecomponents">
+
+### Independência
+
+- Apenas faça modificações aditivas
+  - Novos endpoints
+  - Novos campos opcionais em cada recurso
+- Versionamento de APIs
+  - Ao lançar uma v2, a v1 deve continuar funcionando inalterada
+- Manter equipes separadas, donas de cada serviços
+  - A mesma equipe não vai alterar os clientes
+  - Para adicionar funcionalidades que dependem de outros, solicitações formais podem ser feitas
+
+### Definição de um padrão
+
+- Criação de Logs
+- Health checks
+- Métricas
+- Busca por configs e secrets  
+
+### Técnicas de autenticação
+
+- Basic http
+- Tokens jwt
+- OAuth
+- OpenID connect
+
+### Técnicas de autorização
+
+- ACL (Acess Control List)
+- RBAC (Role-based access control)
+- On behalf of
+
+### Firewall
+
+<img src="images/firewall.png">
+
+### Como me proteger mais?
+
+- Atacantes (hackers) utilizam ferramentas modernas. Conheça essas ferramentas! Estude os possíveis ataques
+- Ter uma equipe de infosec e executar pentests
+- Automatize verificações de segurança. Fazer requisições com certificados, usuários não autorizados, etc
+- Monitorar e detectar ataques em tempo real
+- Ter logs e auditar os sistemas com freq.
+
+### Ambientes
+
+- Dev
+- Staging / QA
+- Homologação
+- Prod
+
+#### Configurações parametrizadas
+
+- Configuração do ambiente em si
+  - Quantidade de recursos
+  - Localização
+- Configurações da aplicação
+  - Destino de logs
+  - Dependências
+  - Dados de acesso
+
+### Estratégias de releases
+
+- Rolling upgrade: atualizar os servidores aos poucos
+- Blue-green: redirecionamento pra novos servidores, se der ruim tira o redirecionamento
+- Feature-toggle: ativar a nova release apenas para poucas pessoas
+
 ### Comparação: Arquitetura Monolítica x Clean x de microsserviços
 
 <img src="https://www.smartwavesa.com/wp-content/uploads/2019/04/2019-04-Microservices-Gartner.png">
