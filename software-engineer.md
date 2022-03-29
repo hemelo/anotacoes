@@ -30,3 +30,114 @@
 - Divisão de contextos/funcionalidades - prevenir que uma aplicação quebre por completo, apenas pequenas partes quebrariam
 - Domínio e subdomínio
 - Linguagem ubíqua
+
+## Arquitetura movida a eventos
+
+<img src="https://docs.microsoft.com/pt-br/dotnet/architecture/microservices/multi-container-microservice-net-applications/media/microservice-application-design/eshoponcontainers-reference-application-architecture.png">
+
+- Event Bus: Mensageria
+- Exemplo de aplicação que abusa de event sourcing: Git
+
+### Escalabilidade
+
+- Horizontal: Instâncias (servidores)
+- Vertical: Hardware
+- Em profundidade
+
+
+### Modelagem de eventos
+
+1. Brainstorming
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/imagem-1-event-modeling.png">
+
+- Simplificação
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/imagem-2-event-modeling.png">
+
+2. Ordenação lógica
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/imagem-3-event-modeling.png">
+
+3. Storyboard
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/imagem-4-event-modeling.png">
+
+4. Identificando entradas
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/definy-imputs-1500x460.png">
+
+5. Identificando saídas
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/Encontrados-os-modelos-de-visualiza%C3%A7%C3%B5es-do-sistema-1500x469.png">
+
+6. Lei de conway
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/apply-1500x509.png">
+
+7. Elaboração de cenários
+
+<img src="https://www.opus-software.com.br/wp-content/uploads/2021/03/elaborate.png">
+
+#### Vantagens
+
+<img src="https://media-exp1.licdn.com/dms/image/C5612AQFvZWT8anAZoA/article-inline_image-shrink_1500_2232/0/1563009403704?e=1652313600&v=beta&t=O-IO_T55_pWXgBkRFN5IUYQWSvRQGwH0QuTtLATGjMw">
+
+## Arquitetura de microsserviços
+
+<img src="https://docs.microsoft.com/en-us/azure/architecture/includes/images/microservices-logical.png">
+
+<img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/microservices_architecture.max-2000x2000.jpg">
+
+### API
+
+<img src="https://santexgroup.com/wp-content/uploads/2020/05/api-definition-01-1024x620.png">
+
+#### Padrões de API
+
+- SOAP
+- REST
+- RPC
+
+#### API Gateway
+
+<img src="https://docs.microsoft.com/pt-br/dotnet/architecture/microservices/architect-microservice-container-applications/media/direct-client-to-microservice-communication-versus-the-api-gateway-pattern/custom-service-api-gateway.png">
+
+- Cache
+- SSL
+- Logging
+
+##### Comportamentos
+
+- Autorização e redirecionamento
+- Uso de decorator pra adicionar informações necessárias nos requests
+- Limitar o acesso ou conteúdo trafegado
+
+#### Service Mesh
+
+Camada dedicada de infraestrutura para observação, testes, gerenciamento de tráfego e segurança de serviços. Ela é adicionada, existem ferramentas para isso
+
+<img src="https://miro.medium.com/max/1200/1*ROUp0-7rYZQXWq42l3Yuhg.png">
+
+<img src="https://istio.io/latest/img/service-mesh.svg">
+
+### Tipos de microsserviços
+
+- **Data service:** conexão com banco de dados
+- **Business service:** regras de negócio, ex: validação de dados
+- **Translation service:** conector com API externa, feito para facilitar manutenção
+- **Edge service:** define comportamento, ex.: envia dados diferentes de uma API para Mobile ou Web
+
+### Comparação: Arquitetura Monolítica x Clean x de microsserviços
+
+<img src="https://www.smartwavesa.com/wp-content/uploads/2019/04/2019-04-Microservices-Gartner.png">
+
+#### Desvantagens
+
+- Maior complexidade de desenvolvimento e infra
+- Debug mais complexo
+- Comunicação entre os serviços deve ser bem pensada
+- Monitoramento é crucial
+- Diversas tecnologias pode ser um problema
+
+Leitura: https://martinfowler.com/bliki/MonolithFirst.html
