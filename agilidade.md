@@ -20,7 +20,7 @@
 
 <img src="https://s7280.pcdn.co/wp-content/uploads/2020/05/scrum-kanban.png">
 
-### Agile
+## Agile
 
 - Satisfação do cliente por meio da entrega contínua de software valioso
 - Ajuste nas mudanças de requisitos na fase de desenvolvimento
@@ -34,7 +34,7 @@ software de trabalho mede o progresso do projeto
 
 <hr>
 
-#### Scrum
+### Scrum
 
 - Product Owner: eficácia
 
@@ -55,7 +55,7 @@ T-shaped: alguém com especialidade em algo, mas com um conhecimento generalizad
 <img src="https://static.wixstatic.com/media/b7403b_942c4bb9c24e4a2e88b1b50e0c2a3cea~mv2.png/v1/fill/w_681,h_515,al_c/b7403b_942c4bb9c24e4a2e88b1b50e0c2a3cea~mv2.png">
 <img src="https://scrumorg-website-prod.s3.amazonaws.com/drupal/inline-images/LinkedIn%20Ad%20for%20PSM%20Nashville_with_water%20mark_1.jpg">
 
-##### Importante
+#### Importante
 
 Negócio: responsabilidade em garantir que o produto a ser desenvolvido faça sentido para o mercado. Não adianta você produzir o melhor produto, se não tem cliente para o mesmo.
 
@@ -63,7 +63,7 @@ Tecnológica: responsabilidade em garantir que o produto produzido esteja corret
 
 Eficiência: responsabilidade em garantir que o time opere com uma melhor qualidade possível.
 
-##### Planning Meeting
+#### Planning Meeting
 
 Em preparação para essa reunião, o P.O. já deve ter olhado as histórias mais prioritárias do projeto, confirmando o entendimento delas com o cliente, melhorando sua clareza, quebrando grandes funcionalidades em partes menores que já agreguem valor para o cliente, etc. Esse processo é conhecido como Zooming, ou refinamento, do topo do Product Backlog.
 
@@ -79,7 +79,7 @@ Então, os desenvolvedores e o P.O. negociam quais desses itens mais prioritári
 
 Uma vez que o Sprint Backlog foi decidido, o time olha para as histórias selecionadas e cria uma meta: uma frase que exprime o maior valor que esse Sprint vai trazer para o usuário! Vale qualquer frase que mostre para os desenvolvedores o que está em jogo e como um Sprint bem sucedido vai impactar positivamente na vida dos usuários da aplicação.
 
-##### Review Meeting
+#### Review Meeting
 
 Na reunião de Review, mostra-se para o cliente e, se possível, o usuário homologa tudo o que ficou pronto na Sprint. Além de cliente e usuários convidados, todos os membros do time participam dessa reunião: desenvolvedores, Scrum Master e Product Owner.
 
@@ -89,7 +89,7 @@ O PO nesse momento, toma notas desses itens e os adiciona ao Product Backlog na 
 
 Ao fim da reunião, definimos se o Sprint foi bem-sucedido ou mal-sucedido, de acordo com a meta definida na Planning Meeting.
 
-###### Definição de Sprint pronto
+##### Definição de Sprint pronto
 
 A Definição de Pronto varia de projeto para projeto, de time para time, de momento em momento do projeto. Exemplos de Definições de Pronto são:
 
@@ -97,7 +97,7 @@ Desenvolvido + Testado Manualmente
 Análise + Desenvolvimento + Em homologação
 Teste de aceitação + desenvolvimento + code review + aprovação
 
-##### Retrospective Meeting
+#### Retrospective Meeting
 
 O último timebox dentro de uma Sprint é o que chamamos de reunião de Retrospectiva. Em toda Sprint, problemas acontecem e sempre temos como crescer e melhorar. Para isso, contudo, é necessário parar e pensar em o que foi legal, para mantermos, e no que não foi bom, para mudarmos.
 
@@ -113,11 +113,11 @@ Similarmente, analisamos os pontos positivos e, se o time sentir necessidade, de
 
 Ao final da reunião, o time possui uma lista de ações a fazer na próxima Sprint. Essa lista deve ficar visível durante o andamento da próxima Sprint, para que o time se relembre delas.
 
-###### Prime Directives
+##### Prime Directives
 
 Garantir que uma retrospectiva tenha a cultura certa para torná-la um evento positivo e orientado a resultados. Faz com que uma retrospectiva se torne um encontro efetivo de equipes para aprender e encontrar soluções para melhorar a forma de trabalhar
 
-###### Ações
+##### Ações
 
 É importante também notar que a lista de itens a fazer que sai de uma retrospectiva contém apenas ações, isto é, atividades que membros do time vão efetivamente fazer para obter algum resultado.
 
@@ -130,7 +130,7 @@ Ações, por outro lado, envolvem os membros do time. Se o problema em questão 
 - Outra ação: em toda história daqui para a frente, haverá também o contato de quem pode sanar dúvidas dos desenvolvedores desse item em particular.
 - O resultado de uma retrospectiva é uma lista, preferencialmente curta, de ações que serão tomadas durante o próximo Sprint para melhorar ainda mais o time e o andamento do projeto.
 
-Exemplo real de problema
+###### Exemplo real de problema
 
 Existe uma área na empresa, externa ao time, responsável pelos deploys e o time precisa de mais rapidez nos deploys de homologação para conseguir passar a fase de "Aprovação em Homologação" de seu Critério de Pronto.
 
@@ -141,11 +141,11 @@ Ações possíveis seriam:
 
 Exemplo de Wishful Thinking: o time de deploy vai magicamente começar a fazer deploys mais rápido.
 
-###### Bugs
+##### Bugs
 
 O Product Owner deve anotar as modificações que serão necessárias, transformá-las em histórias e adicionar ao Product Backlog, na prioridade que couber a elas.
 
-####### Correção de Bugs
+###### Correção de Bugs
 
 Não se deve corrigir erros durante a reunião porque isso tira do foco o objetivo dela, pode consumir todo o time-box, frequentemente esqueceremos de fazer os testes para evitar que esse bug volte e ainda passa a impressão para o cliente de que tudo pode ser resolvido na própria reunião, o que pode não ser verdade no próximo bug encontrado.
 
@@ -161,7 +161,7 @@ Com o Daily Scrum, o time evita com que problemas durem muitos dias e que desenv
 
 <hr>
 
-#### Kanban
+### Kanban
 
 Método organizacional e de gestão visual que controla tarefas de uma equipe e tem adaptabilidade
 
@@ -226,11 +226,13 @@ Service Request Manager: tem como papel principal fazer a ordenação e papel do
   </tr>
 </table>
 
-## XP - Extreme Programming
+<hr>
+
+### XP - Extreme Programming
 
 Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valor de projeto, etc
 
-### Motivos para um projeto falhar
+#### Motivos para um projeto falhar
 
 - Cliente distante
 - Cereja do bolo
@@ -238,7 +240,7 @@ Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valo
 - Trabalho empurrado
 - Dividas técnicas
 
-### Valores
+#### Valores
 
 - Comunicação
 - Simplicidade
@@ -246,7 +248,7 @@ Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valo
 - Coragem
 - Respeito
 
-### Principios
+#### Principios
 
 - Humanidade
 - Economia
@@ -263,11 +265,11 @@ Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valo
 - Passos pequenos
 - Aceitação de responsabilidade
 
-### Práticas
+#### Práticas
 
 <img src="https://csharpcorner-mindcrackerinc.netdna-ssl.com/article/temp/75620/Images/XP.png">
 
-### Pessoas envolvidas
+#### Pessoas envolvidas
 
 - Dev
 - Cliente
@@ -277,3 +279,34 @@ Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valo
 - Tracker
 - Gerente
 - ...
+
+#### Características de um time XP (coeso)
+
+- Multidisciplinar
+- Auto-organizável
+- Fisicamente próximo
+- Busca melhoria contínua
+- Posse coletiva do código
+- Ritmo sustentável
+
+#### Projeto simples e MVP
+
+- MVP = Produto mínimo viável - Possui a maior quantidade de funcionalidades de valor na menor entrega possível, sendo suficiente pro cliente usar e dar feedback
+
+#### Vantagens de pequenas entregas
+
+- Entrega de valor adiantado e contínuo
+- Processo aprimorado rapidamente por falhar mais cedo
+- Maior qualidade, confiança e estabilidade
+- Realiza um design simplificado e suficiente apenas para entrega
+- Código atualizado e integrado com mais frequência
+- Maior engajamento do time
+
+##### Integração contínua
+
+- Prática de versionar, integrar e fazer commit em somente uma versão no repositório
+- Cada integração é verificada por um build com testes automatizados, detectando erros
+
+#### Refatoramento
+
+- Também chamada de refinamento incremental, mantêm a semântica da funcionalidade, alterando apenas o design 

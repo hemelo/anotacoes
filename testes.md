@@ -9,3 +9,5 @@
 <img src="https://miro.medium.com/max/581/1*V3CyC87v-5oj6icmWeu-fg.jpeg">
 
 <img src="https://d112uwirao0vo9.cloudfront.net/wp-content/uploads/2020/12/tdd_flow1.gif">
+
+<img src="https://d112uwirao0vo9.cloudfront.net/wp-content/uploads/2020/08/TDD-and-BDD.png">
