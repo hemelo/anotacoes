@@ -309,4 +309,6 @@ Seguir um padrão de maneira extrema, seguindo a regra a fim de não perder valo
 
 #### Refatoramento
 
-- Também chamada de refinamento incremental, mantêm a semântica da funcionalidade, alterando apenas o design 
+- Também chamada de refinamento incremental, mantêm a semântica da funcionalidade, alterando apenas o design
+
+<img src="https://www.grahambrooks.com/images/XP-Wall-Graph.png">
