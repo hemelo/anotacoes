@@ -312,7 +312,9 @@ $ kubectl delete deployments -all
 $ kubectl delete rs -all
 ```
 
-##### Deployment de projeto real
+#### Volume  
+
+* Com uso de volume local
 
 ```
 # nginx-deployment.yaml
@@ -343,11 +345,273 @@ spec:
         - name: volume
           hostPath:
             path: /C/users/henri/desktop/volume
-            type: Directory
+            type: DirectoryOrCreate
   replicas:3
   selector:
     matchLabels:
       app: portal-noticias
 ```
 
-Incluir /C/users/henri/desktop/volume como volume no Docker Desktop
+Incluir /C/users/henri/desktop/volume como volume no Docker Desktop no Windows e /home/volume no Linux
+
+#### Persistent Volume
+
+* Esquema de volume usado bastante na nuvem
+
+```
+# persistent-volume.yaml
+
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: pv-1
+spec:
+  capacity:
+    storage: 10Gi
+  accessMode:
+    - ReadWriteMany ------------> Many = Múltiplos pods por vez / Once = Único pod por vez
+  gcePersistentDisk:
+    pdName: pv-disk ------------> Nome do disco na nuvem
+  storageClassName: standard
+```
+
+```
+# persistent-volume-claim.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-1
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+```
+
+```
+# testando-persistent-volume.yaml
+
+apiVersion:v1
+kind: Pod
+metadata:
+  name: pod-pv
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx-latest
+      volumeMounts:
+        - mountPath: /volume-dentro-do-container
+          name: primeiro-pv
+  volumes:
+    - name: primeiro-pv
+      persistentVolumeClaim:
+        claimName: pvc-1
+```
+
+#### Storage Classes
+
+Criando Persistent Volumes dinamicos
+
+```
+# storage-class-google-cloud-platform.yaml
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: slow
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  fstype: ext4
+```
+
+```
+# persistent-volume-claim.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-1
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: slow
+```
+
+Dessa forma, ao rodar o Claim no Shell da google, será criado um disco de 10Gb
+
+#### Statefull Set
+
+Cada pod tem um identificador, então se falhar não será substituido mas sim reiniciado com mesmo ID
+
+```
+apiVersion: apps\v1
+kind: StatefulSet
+metadata:
+  name: sistema-armazenamento-noticias
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sistema-noticias
+      name: sistema-noticias
+    spec:
+      containers:
+        - name: sistema-noticias-container
+          image: aluracursos/sistema-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: sistema-configmap
+          volumeMounts:
+            - name: imagens
+              mountPath: /var/www/html/uploads
+            - name: sessao
+              mountPath: /tmp
+    volumes:
+      - name: imagens
+        persistentVolumeClaim:
+          claimName: imagens-pvc
+      - name: sessao
+        persistentVolumeClaim:
+          claimName: sessao-pvc
+    replicas: 3
+    selector:
+      matchLabels:
+        app: sistema-noticias
+    serviceName: svc-sistema-noticias
+```
+
+#### Liveness and Readliness Probes
+
+Objetivo: Prever erros e forçar restart de pods
+
+```
+# portalnoticias-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-noticias-deployment
+spec:
+  template:
+    metadata:
+      name: portal-noticias
+      labels:
+        app: portal-noticias
+    spec:
+      containers:
+        - name: portal-noticias-container
+          image: aluracursos/portal-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: portal-configmap
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readlinessProbe:
+            httpGet:
+              path: /inserir-noticias.php
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 3  
+  selector:
+    matchLabels:
+      app: portal-noticias
+```
+
+#### Horizontal Pod Autoscale
+
+```
+# portal-noticias-hpa.yaml
+
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: portal-noticias-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: app/v1
+    kind: Deployment
+    name: portal-noticias-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+```
+
+```
+# portalnoticias-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-noticias-deployment
+spec:
+  template:
+    metadata:
+      name: portal-noticias
+      labels:
+        app: portal-noticias
+    spec:
+      containers:
+        - name: portal-noticias-container
+          image: aluracursos/portal-noticias:1
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: portal-configmap
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readlinessProbe:
+            httpGet:
+              path: /inserir-noticias.php
+              port: 80
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 3  
+          resources:
+            requests:
+              cpu: 10m
+  selector:
+    matchLabels:
+      app: portal-noticias
+```
+
+OBS: Setar o kubernet de métricas, que está em /iac/metricas.yaml: `$ kubectl apply -f  /iac/metricas.yaml` e no linux é `$ minikube addons enable metrics-server`
+
+Testando infraestrutura
+
+```
+$ kubectl get hpa
+$ sh stress.sh 0.001 > out2.txt
+$ kubectl get hpa --watch ---------------------------> Exibirá o consumo subindo absurdamente
+```
+
+#### Vertical Pod Autoscale
