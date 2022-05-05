@@ -2,7 +2,7 @@
 
 ## Anotacoes aleatorias Curso de Docker
 
-```
+```shell
 $docker run -it ubuntu bash
 $docker build -t henri/app-node:1.0
 $docker stop $(docker container ls)
@@ -27,67 +27,67 @@ $docker run -it ubuntu --network my-bridge ubuntu bash
 
 ## Anotacoes aleatorias curso de Docker Sworm
 
-```
+```shell
 $docker-machine create -d virtualbox vm1
 $docker-machine ssh vm1
-$$docker swarm init --advertise-addr [ip-host]
+$docker swarm init --advertise-addr [ip-host]
 $docker-machine create -d virtualbox vm2
 $docker-machine create -d virtualbox vm3
 $docker-machine ssh vm2
-$$docker swarm join --token [token que aparece em $$docker swarm join-token worker]
+$docker swarm join --token [token que aparece em $$docker swarm join-token worker]
 $docker-machine ssh vm1
-$$docker node ls -------------------------> comando que só a máquina Lider pode executar
+$docker node ls -------------------------> comando que só a máquina Lider pode executar
 ```
 
 ### Remocao de nó
 
-```
+```shell
 $docker-machine ssh vm2
-$$docker swarm leave      ----------------------------> coloca como status down
+$docker swarm leave      ----------------------------> coloca como status down
 $docker-machine ssh vm1
-$$docker node rm [id que aparece em node ls] -----------------------> remove efetivamente
+$docker node rm [id que aparece em node ls] -----------------------> remove efetivamente
 ```
 
 ### Serviços
 
-```
+```shell
 $docker-machine ssh vm1
-$$docker service create -p 8080:3000 [imagem] ------------> cria um servico com um container que é alocado em uma vm aleatoria
-$$docker container ls
-$$docker container rm [id container criado]
-$$docker service ls
-$$docker service ps ul --------------> aparece que o container foi reiniciado
+$docker service create -p 8080:3000 [imagem] ------------> cria um servico com um container que é alocado em uma vm aleatoria
+$docker container ls
+$docker container rm [id container criado]
+$docker service ls
+$docker service ps ul --------------> aparece que o container foi reiniciado
 ```
 
 Com a criação de serviço, a rota para o container é compartilhado entre as máquinas independente da máquina em que ele está. Com isso, se tiver um container com uma aplicação web, ela poderá ser acessada pelo ip de qualquer uma das VMs por causa do Routing Mesh
 
 ### Fazendo backup do Swarm
 
-```
+```shell
 $docker-machine ssh vm1
-$$sudo su
-$$cd /var/lib/docker/swarm
-$$cp -r /var/lib/docker/swarm/ backup
+$sudo su
+$cd /var/lib/docker/swarm
+$cp -r /var/lib/docker/swarm/ backup
 ```
 
 Testando backup
 
-```
-$$docker node rm vm2 --force
-$$docker node rm vm3 --force
-$$docker swarm leave --force
-$$cd /var/lib/docker/swarm ------------> pasta vazia
-$$cp -r  backup/* /var/lib/docker/swarm/
-$$docker swarm init --force-new-cluster --advertise-addr [ip]
+```shell
+$docker node rm vm2 --force
+$docker node rm vm3 --force
+$docker swarm leave --force
+$cd /var/lib/docker/swarm ------------> pasta vazia
+$cp -r  backup/* /var/lib/docker/swarm/
+$docker swarm init --force-new-cluster --advertise-addr [ip]
 ```
 
 ### Adicionando manager
 
-```
-$$docker swarm join-token manager
+```shell
+$docker swarm join-token manager
 $docker-machine create -d virtualbox vm4
 $docker-machine ssh vm4
-$$docker swarm join --token [token]
+$docker swarm join --token [token]
 ```
 
 Quando a vm1 é desligada por exemplo com $$docker swarm leave --force, a vm4 vai virar lider. Caso tenha mais máquinas managers, ocorre uma eleicao pra nova maquina lider
@@ -102,65 +102,65 @@ N numero de managers
 
 ### Removendo manager
 
-```
-$$docker node demote [id] -> rebaixamento a worker
-$$docker node rm [id]
+```shell
+$docker node demote [id] -> rebaixamento a worker
+$docker node rm [id]
 ```
 
 ### Restricao de nós
 
-```
-$$docker service rm $(docker service ls -q) ---> removendo servicos testes que tao rodando
-$$docker node update --availability drain [vm-name]
-$$docker node update --availability active [vm-name]
+```shell
+$docker service rm $(docker service ls -q) ---> removendo servicos testes que tao rodando
+$docker node update --availability drain [vm-name]
+$docker node update --availability active [vm-name]
 ```
 
 ### Restricao de servicos
 
-```
-$$docker service update --constraint-add node.role==worker [id-servico]
-$$docker service update --constraint-add node.id==[id-node] [id-servico]
-$$docker service update --constraint-add node.hostname==[vm-name] c
-$$docker service update --constraint-rm node.id==[id-node] [id-servico]
-$$docker service update --constraint-rm node.hostname==[vm-name] [id-servico]
+```shell
+$docker service update --constraint-add node.role==worker [id-servico]
+$docker service update --constraint-add node.id==[id-node] [id-servico]
+$docker service update --constraint-add node.hostname==[vm-name] c
+$docker service update --constraint-rm node.id==[id-node] [id-servico]
+$docker service update --constraint-rm node.hostname==[vm-name] [id-servico]
 ```
 
 ### Replicas
 
-```
-$$docker service update --replicas 4 [id-servico]
-$$docker service scale [id-servico]=4
+```shell
+$docker service update --replicas 4 [id-servico]
+$docker service scale [id-servico]=4
 ```
 
 #### Servico global
 
-```
-$$docker service create -p 8080:3000 --mode global [imagem] ----------> replica pra todas vms
+```shell
+$docker service create -p 8080:3000 --mode global [imagem] ----------> replica pra todas vms
 ```
 
 #### Descobridor de serviços
 
-```
-$$docker network create -d overlay test_overlay
-$$docker service create --name servico --network test_overlay --replicas 2 alpine sleep 1D
-$$docker service ls ---------------------> copia o nome completo do servico, "servico.1.[id]"
-$$docker exec -it servico.1.[id] sh
-$$$ ping servico.2.[id] --------------------> irá funcionar exibindo o ping pro container replicado sem precisar informar o IP
+```shell
+$docker network create -d overlay test_overlay
+$docker service create --name servico --network test_overlay --replicas 2 alpine sleep 1D
+$docker service ls ---------------------> copia o nome completo do servico, "servico.1.[id]"
+$docker exec -it servico.1.[id] sh
+$ping servico.2.[id] --------------------> irá funcionar exibindo o ping pro container replicado sem precisar informar o IP
 ```
 
 O driver overlay é feito para comunicar multiplos hosts em uma mesma rede, mas tambem pode ser usado para conectar containers em escopo local. Permitindo, então, conectar serviços e containers standalone:
 
-```
-$$docker network create -d overlay --attachable my_overlay
+```shell
+$docker network create -d overlay --attachable my_overlay
 ```
 
 ### Stack Deploy
 
-```
-$$cat > docker-compose.yml
+```shell
+$cat > docker-compose.yml
 > Copiar e colar o arquivo aqui e dar enter
-$$docker stack deploy --compose-file docker-compose.yml [nome-da-stack]
-$$docker stack rm [nome-da-stack]
+$docker stack deploy --compose-file docker-compose.yml [nome-da-stack]
+$docker stack rm [nome-da-stack]
 ```
 
 Por padrão, tanto o Docker no modo standalone quanto o Docker Swarm, partilham apenas de um driver local para uso de volumes. Isso quer dizer que o Docker Swarm não possui, até então, solução nativa para distribuir volumes entre os nós.

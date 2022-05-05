@@ -39,10 +39,10 @@ $ kubectl delete pod nginx-pod
 
 E se... YamL?
 
-```
+```yaml
 # portal-noticias.yaml
 
-apiVersion:v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: portal-noticias
@@ -78,7 +78,7 @@ Tipos: ClusterIP, NodePort, LoadBalancer
 - NodePort - ClusterIP com compartilhamento externo
 - LoadBalancer - Envia conexões para o primeiro servidor no pool até atingir a capacidade e, em seguida, envia novas conexões para o próximo servidor disponível. Esse algoritmo é ideal para ambientes hospedados.
 
-```
+```yaml
 # svc-pod-1-cluster.yaml
 
 apiVersion: v1
@@ -94,7 +94,7 @@ spec:
       targetPort: 80
 ```
 
-```
+```yaml
 # svc-pod-1-node.yaml
 
 apiVersion: v1
@@ -110,7 +110,7 @@ spec:
       nodePort: 30000
 ```
 
-```
+```yaml
 # svc-pod-1-balancer.yaml
 
 apiVersion: v1
@@ -126,10 +126,10 @@ spec:
       nodePort: 30000
 ```
 
-```
+```yaml
 # pod-1.yaml
 
-apiVersion:v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: pod-1
@@ -152,7 +152,7 @@ $ kubectl delete svc -all
 
 #### Variáveis de ambiente
 
-```
+```yaml
 # database.yml
 
 apiVersion: v1
@@ -178,7 +178,7 @@ spec:
 
 Separando variaveis
 
-```
+```yaml
 # database-config.yaml
 
 apiVersion: v1
@@ -199,7 +199,7 @@ $ kubectl describe configmap database-config
 
 Utilizando em alguma dependencia
 
-```
+```yaml
 # database.yml
 
 apiVersion: v1
@@ -223,7 +223,7 @@ E pra usar o banco de dados? Basta criar um Cluster Service e passar como endere
 
 #### Replica Sets
 
-```
+```yaml
 # portal-noticias.yaml
 
 apiVersion: v1
@@ -247,7 +247,7 @@ spec:
           envFrom:
             - configMapRef:
                 name: database-config
-  replicas:3
+  replicas: 3
   selector:
     matchLabels:
       app: portal-noticias
@@ -265,7 +265,7 @@ $ kubectl get pods -> exibe um novo pod com outro id que substitui o removido au
 
 Deployment é basicamente um replicaset com mais funcionalidades. Quando criados, Deployments auxiliam com controle de versionamento e criam um ReplicaSet automaticamente.
 
-```
+```yaml
 # nginx-deployment.yaml
 
 apiVersion: v1
@@ -284,7 +284,7 @@ spec:
           image: nginx-stable
           ports:
             - containerPort: 80
-  replicas:3
+  replicas: 3
   selector:
     matchLabels:
       app: nginx-pod
@@ -316,7 +316,7 @@ $ kubectl delete rs -all
 
 * Com uso de volume local
 
-```
+```yaml
 # nginx-deployment.yaml
 
 apiVersion: v1
@@ -346,7 +346,7 @@ spec:
           hostPath:
             path: /C/users/henri/desktop/volume
             type: DirectoryOrCreate
-  replicas:3
+  replicas: 3
   selector:
     matchLabels:
       app: portal-noticias
@@ -358,7 +358,7 @@ Incluir /C/users/henri/desktop/volume como volume no Docker Desktop no Windows e
 
 * Esquema de volume usado bastante na nuvem
 
-```
+```yaml
 # persistent-volume.yaml
 
 apiVersion: v1
@@ -369,13 +369,15 @@ spec:
   capacity:
     storage: 10Gi
   accessMode:
-    - ReadWriteMany ------------> Many = Múltiplos pods por vez / Once = Único pod por vez
+    - ReadWriteMany
+    # Many = Múltiplos pods por vez / Once = Único pod por vez
   gcePersistentDisk:
-    pdName: pv-disk ------------> Nome do disco na nuvem
+    pdName: pv-disk
+    # Nome do disco na nuvem
   storageClassName: standard
 ```
 
-```
+```yaml
 # persistent-volume-claim.yaml
 
 apiVersion: v1
@@ -391,7 +393,7 @@ spec:
   storageClassName: standard
 ```
 
-```
+```yaml
 # testando-persistent-volume.yaml
 
 apiVersion:v1
@@ -415,7 +417,7 @@ spec:
 
 Criando Persistent Volumes dinamicos
 
-```
+```yaml
 # storage-class-google-cloud-platform.yaml
 
 apiVersion: storage.k8s.io/v1
@@ -428,7 +430,7 @@ parameters:
   fstype: ext4
 ```
 
-```
+```yaml
 # persistent-volume-claim.yaml
 
 apiVersion: v1
@@ -450,7 +452,7 @@ Dessa forma, ao rodar o Claim no Shell da google, será criado um disco de 10Gb
 
 Cada pod tem um identificador, então se falhar não será substituido mas sim reiniciado com mesmo ID
 
-```
+```yaml
 apiVersion: apps\v1
 kind: StatefulSet
 metadata:
@@ -494,7 +496,7 @@ spec:
 
 Objetivo: Prever erros e forçar restart de pods
 
-```
+```yaml
 # portalnoticias-deployment.yaml
 
 apiVersion: apps/v1
@@ -537,7 +539,7 @@ spec:
 
 #### Horizontal Pod Autoscale
 
-```
+```yaml
 # portal-noticias-hpa.yaml
 
 apiVersion: autoscaling/v2beta2
@@ -560,7 +562,7 @@ spec:
           averageUtilization: 50
 ```
 
-```
+```yaml
 # portalnoticias-deployment.yaml
 
 apiVersion: apps/v1

@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.disksize.size = '30GB'
+  config.vm.network "forwarded_port", guest: 81, host: 81
+  config.vm.network "forwarded_port", guest: 80, host: 80
+  config.vm.network "forwarded_port", guest: 3306, host: 3306
+  config.vm.network "forwarded_port", guest: 8080, host: 8080
+  config.vm.network "forwarded_port", guest: 9000, host: 9000
+  config.vm.network "forwarded_port", guest: 19999, host: 19999
+  config.vm.network "forwarded_port", guest: 9001, host:9001
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
+
+  config.vm.provision "shell", inline: "sudo apt-get update && sudo apt-get install swapspace python python3-pip python-dev libmysqlclient-dev python3-venv  build-essential libssl-dev libffi-dev unzip -y"
+
+  $script_mysql = <<-SCRIPT
+    apt-get update && \
+    apt-get install -y openjdk-8-jdk  mysql-server-5.7 && \
+    mysql -e "create user 'devops'@'%' identified by 'mestre';"  && \
+    mysql -e "create user 'devops_dev'@'%' identified by 'mestre';"  && \
+    mysql -e "create database todo;" && \
+    mysql -e "create database todo_dev;" && \
+    mysql -e "create database test_todo_dev;" && \
+    mysql -e "grant all privileges on *.* to devops@'%' identified by 'mestre';" && \
+    mysql -e "grant all privileges on *.* to devops_dev@'%' identified by 'mestre';"
+  SCRIPT
+
+  config.vm.provision "shell", inline: $script_mysql
+  config.vm.provision "shell",
+    inline: "cat /configs/mysqld.cnf > /etc/mysql/mysql.conf.d/mysqld.cnf"
+  config.vm.provision "shell",
+    inline: "service mysql restart"
+  config.vm.synced_folder "./configs", "/configs"
+
+# Extra
+  config.vm.provision "shell",
+    inline: "chmod +x /vagrant/scripts/*"
+  config.vm.provision "shell",
+	inline: "sudo /vagrant/scripts/docker.sh"
+end
