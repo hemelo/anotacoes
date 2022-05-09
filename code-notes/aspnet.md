@@ -1,5 +1,28 @@
 # ASPNET
 
+## Core x Framework
+
+.NET Core é uma plataforma para desenvolvimento de aplicações criada e mantida pela Microsoft como um projeto de open-source. Sendo uma solução mais leve e modular que o .NET Framework e pode ser usada em diferentes sistemas operacionais como Windows, Mac e Linux. O .NET Framework que é suportado apenas no Windows.
+
+Ambos os Frameworks compartilham muitos dos mesmos componentes e é possível compartilhar código entre os dois. No entanto, há diferenças fundamentais entre os dois para escolher um ou outro.
+
+**1 - Considere usar o .NET Core se:**
+
+- Você tiver necessidades de plataforma cruzada (Windows, macOS e Linux)
+- Você estiver direcionando microsserviços.   
+- Você estiver usando contêineres do Docker.
+- Você precisar de alto desempenho e sistemas escalonáveis.
+- Você precisar de versões do .NET correspondentes a cada aplicativo.
+
+**2 - Considere usar o .NET Framework se:**
+
+- Seu aplicativo usar o .NET Framework atualmente (a recomendação é estender em vez de migrar);
+- Seu aplicativo usa bibliotecas .NET de terceiros ou pacotes NuGet não disponíveis para o .NET Core;
+- Seu aplicativo usa tecnologias .NET que não estão disponíveis para o .NET Core;
+  - Serviços WCF 
+  - VB.NET no Core não dá suporte a aplicações mobile
+- Seu aplicativo usa uma plataforma que não oferece suporte ao .NET Core;
+
 ## Services
 
 <table>
